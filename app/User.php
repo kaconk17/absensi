@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -16,8 +17,24 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nama',
+        'email',
+        'password',
+        'id',
+        'nik',
+        'alamat',
+        'domisili',
+        'kelamin',
+        'no_telepon',
+        'jabatan',
+        'dept',
+        'group',
+        'section',
+        'status_karyawan',
+        'api_token',
     ];
+
+    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -36,4 +53,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function rollApiKey(){
+        do{
+            $this->api_token =Str::random(60);
+        }while(
+            $this->where('api_token', $this->api_token)->exists()
+        );
+        $this->save();
+    }
 }

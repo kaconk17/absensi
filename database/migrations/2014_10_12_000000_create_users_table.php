@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('status_karyawan',50);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('api_token',50)->nullable();
+            $table->string('api_token',100)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

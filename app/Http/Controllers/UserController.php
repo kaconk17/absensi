@@ -44,4 +44,28 @@ class UserController extends Controller
         );
         }
     }
+
+    public function mylocation(Request $request, $id){
+        //$token = $request['c_token'];
+       // $user = User::where('api_token',base64_decode($token))->first();
+       $user = User::find($id);
+        if ($user) {
+
+            return array(
+                'id'=>$user->id,
+                'lat'=>$user->lat,
+                'long'=>$user->long,
+                'success'=>true,
+
+            );
+          
+        }else{
+            return array(
+                'message'=>'Gagal ambil data !',
+                'code'=>'user',
+                'success'=>false,
+                
+            );
+        }
+    }
 }

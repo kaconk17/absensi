@@ -19,8 +19,9 @@ class TbAbsensi extends Migration
             $table->foreign('id_user')->references('id')->on('users');
             $table->date('tanggal');
             $table->time('jam');
-            $table->string('lat',100);
-            $table->string('long',100);
+            $table->double('lat');
+            $table->double('long');
+            $table->string('status',50);
             $table->string('keterangan',100)->nullable();
             $table->timestamps();
         });

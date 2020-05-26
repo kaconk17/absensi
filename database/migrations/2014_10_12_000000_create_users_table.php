@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->uuid('id')->primary();
             $table->string('nik',50);
             $table->string('nama',50);
-            $table->string('email',50);
+            $table->string('email',50)->unique();
             $table->string('alamat',100);
             $table->string('domisili',100)->nullable();
             $table->double('lat')->nullable();

@@ -7,6 +7,7 @@ use App\User;
 use App\AbsenModel;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class AbsenController extends Controller
 {
@@ -14,11 +15,26 @@ class AbsenController extends Controller
         $token = $request['c_token'];
         $lat = $request['lat'];
         $long = $request['long'];
-        $status= $request['status'];
+       $rad = DB::table('tb_conf')->where('name','radius')->first();
 
         $user = User::where('api_token',base64_decode($token))->first();
 
         if($user){
+
+            if (empty($user->lat) || empty($user->long)) {
+                return array(
+                    'message'=>'Absen Gagal !',
+                    'code'=>'latlong',
+                    'success'=>false,
+                );
+            }
+            $jarak = $this->distance($user->lat, $user->long, $lat, $long);
+            if ($jarak > $rad->value) {
+               $status = 'NG';
+            }else{
+                $status = 'OK';
+            }
+
             $now = Carbon::now();
             $simpan = AbsenModel::create([
                 'id_absensi'=>Str::uuid(),
@@ -27,6 +43,7 @@ class AbsenController extends Controller
                 'jam'=>$now->format('H:i:s'),
                 'lat'=>$lat,
                 'long'=>$long,
+                'jarak'=>$jarak,
                 'status'=>$status,
             ]);
             if ($simpan) {
@@ -54,19 +71,7 @@ class AbsenController extends Controller
     }
     
 
-    public function test(Request $request){
-        $token = $request['c_token'];
-        $lat = $request['lat'];
-        $long = $request['long'];
-        $user = User::where('api_token',base64_decode($token))->first();
-
-        $dist = $this->distance($user->lat, $user->long, $lat, $long);
-
-        return array(
-
-            'jarak'=>$dist,
-        );
-    }
+    //src : https://www.phpninja.info/en/other/calculating-distance-two-points-latitude-and-longitude/
     function distance($lat1, $lon1, $lat2, $lon2) { 
         $pi80 = M_PI / 180; 
         $lat1 *= $pi80; 

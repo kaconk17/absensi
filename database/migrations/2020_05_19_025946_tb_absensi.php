@@ -21,6 +21,7 @@ class TbAbsensi extends Migration
             $table->time('jam');
             $table->double('lat');
             $table->double('long');
+            $table->decimal('jarak',8,2);
             $table->string('status',50);
             $table->string('keterangan',100)->nullable();
             $table->timestamps();

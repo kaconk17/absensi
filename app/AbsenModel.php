@@ -16,6 +16,7 @@ class AbsenModel extends Model
         'jam',
         'lat',
         'long',
+        'jarak',
         'status',
         'keterangan',
         

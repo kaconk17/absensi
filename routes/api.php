@@ -22,5 +22,5 @@ Route::post('/login', 'UserController@login');
 Route::middleware('ApiAuth')->group(function () {
     Route::get('/user/location/{id}', 'UserController@mylocation');
     Route::post('/absen/create', 'AbsenController@create');
-    Route::post('test', 'AbsenController@test');
+    
 });

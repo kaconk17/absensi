@@ -73,7 +73,7 @@ class AbsenController extends Controller
     public function getAbsen(Request $request, $id){
 
         $tanggal = Carbon::now()->toDateString();
-
+        $user = User::find($id);
         $absen = AbsenModel::where('id_user',$id)
                             ->where('tanggal',$tanggal)
                             ->get();
@@ -82,6 +82,8 @@ class AbsenController extends Controller
                 'message'=>'Berhasil ambil data',
                 'code'=>'absen',
                 'success'=>true,
+                'homeLat'=> $user->lat,
+                'homeLng'=> $user->long,
                 'data'=> $absen,
             );
         }else{

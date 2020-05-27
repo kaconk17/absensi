@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'UserController@login');
 Route::middleware('ApiAuth')->group(function () {
     Route::get('/user/location/{id}', 'UserController@mylocation');
+    Route::get('/user/profile/{id}', 'UserController@profile');
     Route::post('/absen/create', 'AbsenController@create');
-    
+    Route::get('/absen/getabsen/{id}', 'AbsenController@getAbsen');
+    Route::put('/user/update/{id}', 'UserController@sethomelocation');
 });

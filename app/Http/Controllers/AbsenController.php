@@ -69,6 +69,29 @@ class AbsenController extends Controller
         }
        
     }
+
+    public function getAbsen(Request $request, $id){
+
+        $tanggal = Carbon::now()->toDateString();
+
+        $absen = AbsenModel::where('id_user',$id)
+                            ->where('tanggal',$tanggal)
+                            ->get();
+        if (!$absen->isEmpty()) {
+            return array(
+                'message'=>'Berhasil ambil data',
+                'code'=>'absen',
+                'success'=>true,
+                'data'=> $absen,
+            );
+        }else{
+            return array(
+                'message'=>'Gagal mengambil data!',
+                'code'=>'absen',
+                'success'=>false,
+            );
+        }
+    }
     
 
     //src : https://www.phpninja.info/en/other/calculating-distance-two-points-latitude-and-longitude/

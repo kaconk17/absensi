@@ -76,6 +76,8 @@ class AbsenController extends Controller
         $user = User::find($id);
         $absen = AbsenModel::where('id_user',$id)
                             ->where('tanggal',$tanggal)
+                            ->orderBy('tanggal','desc')
+                            ->orderBy('jam','desc')
                             ->get();
         if (!$absen->isEmpty()) {
             return array(
@@ -105,6 +107,8 @@ class AbsenController extends Controller
            $absen = AbsenModel::where('id_user',$id)
                                 ->where('tanggal', '>=', $tgl_awal)
                                 ->where('tanggal','<=', $tgl_akhir)
+                                ->orderBy('tanggal','desc')
+                                ->orderBy('jam','desc')
                                 ->get();
             if (!$absen->isEmpty()) {
                 return array(

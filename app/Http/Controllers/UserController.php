@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -14,7 +15,7 @@ class UserController extends Controller
         $pass = $request['pass'];
 
         $data = User::where('email',$email)->first();
-  
+        $rad = DB::table('tb_conf')->where('name','radius')->first();
         if ($data) {
            if (Hash::check($pass,$data->password)) {
            
@@ -22,6 +23,7 @@ class UserController extends Controller
     
                 return array(
                     'user' => $data,
+                    'radius'=> $rad->value,
                     'token'=>base64_encode($data->api_token),
                     'message' => 'Authorization Successful!',
                     'success'=>true
@@ -45,11 +47,13 @@ class UserController extends Controller
         }
     }
 
-    public function sethomelocation(Request $request, $id){
+    public function sethomelocation(Request $request){
         $setlat = $request['lat'];
         $setlong = $request['long'];
+        $token = $request['c_token'];
 
-        $user = User::find($id);
+        $user = User::where('api_token',base64_decode($token))->first();
+
         if ($user) {
           
       
@@ -101,7 +105,7 @@ class UserController extends Controller
             );
         }
     }
-
+/*
     public function profile($id){
         $user = User::find($id);
 
@@ -119,5 +123,36 @@ class UserController extends Controller
                 'success'=>false,
             );
         }
+    }
+*/
+    public function profile(Request $request, $id){
+
+        $token = $request['c_token'];
+        //$user = User::find($id);
+        //$user = DB::table('users')->where('id',$id)->first();
+        $user = User::where('api_token',base64_decode($token))->first();
+        if ($user) {
+           
+            if ($user->id == $id) {
+                return array(
+                    'user' => $user,
+                    'message' => 'Ambil data berhasil',
+                    'success'=>true,
+                );
+            }else{
+                return array(
+                    'message'=>'Gagal mengambil data!',
+                    'code'=>'token',
+                    'success'=>false,
+                );
+            }
+        }else{
+            return array(
+                'message'=>'Gagal mengambil data!',
+                'code'=>'token',
+                'success'=>false,
+            );
+        }
+        
     }
 }

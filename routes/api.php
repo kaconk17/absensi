@@ -24,5 +24,6 @@ Route::middleware('ApiAuth')->group(function () {
     Route::get('/user/profile/{id}', 'UserController@profile');
     Route::post('/absen/create', 'AbsenController@create');
     Route::get('/absen/getabsen/{id}', 'AbsenController@getAbsen');
-    Route::put('/user/update/{id}', 'UserController@sethomelocation');
+    Route::post('/user/update', 'UserController@sethomelocation');
+    Route::get('/absen/history/{id}', 'AbsenController@history');
 });

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->double('lat')->nullable();
             $table->double('long')->nullable();
             $table->string('kelamin',2);
+            $table->date('tgl_lahir');
             $table->string('no_telepon',20);
             $table->string('jabatan',50);
             $table->string('dept',50);

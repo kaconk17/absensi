@@ -90,7 +90,7 @@ class AbsenController extends Controller
             );
         }else{
             return array(
-                'message'=>'Gagal mengambil data!',
+                'message'=>'Tidak ada data!',
                 'code'=>'absen',
                 'success'=>false,
             );
@@ -118,7 +118,7 @@ class AbsenController extends Controller
                 );
             }else{
                 return array(
-                    'message'=>'Gagal mengambil data!',
+                    'message'=>'Tidak ada data!',
                     'code'=>'data',
                     'success'=>false,
                 );

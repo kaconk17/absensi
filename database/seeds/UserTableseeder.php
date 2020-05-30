@@ -22,6 +22,7 @@ class UserTableseeder extends Seeder
         'alamat'=>'Bangil',
         'domisili'=>'Bangil',
         'kelamin'=>'L',
+        'tgl_lahir'=> '2020-05-25',
         'no_telepon'=>'00000000000',
         'jabatan'=>'Manager',
         'dept'=>'Admin',

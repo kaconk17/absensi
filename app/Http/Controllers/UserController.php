@@ -155,4 +155,51 @@ class UserController extends Controller
         }
         
     }
+
+    public function create(Request $request){
+        $token = $request['c_token'];
+        $user = User::where('api_token',base64_decode($token))->first();
+
+        if($user->dept == "Admin"){
+
+            $create = User::create([
+                'nama'=> $request['nama'],
+                'email'=> $request['email'],
+                'password' => Hash::make($request['password']),
+                'id'=> Str::uuid(),
+                'nik'=>$request['nik'],
+                'alamat'=>$request['alamat'],
+                'domisili'=>$request['domisili'],
+                'kelamin'=>$request['jenis_kelamin'],
+                'tgl_lahir'=> $request['tgl_lahir'],
+                'no_telepon'=>$request['no_tlp'],
+                'jabatan'=>$request['jabatan'],
+                'dept'=>$request['dept'],
+                'group'=>$request['group'],
+                'section'=>$request['section'],
+                'status_karyawan'=>$request['status'],
+                
+               ]);
+            if ($create) {
+               
+                return array(
+                'code'=>'user',
+                 'message' => 'Ambil data berhasil',
+                 'success'=>true,
+             );
+            }else{
+                return array(
+                    'message'=>'Gagal mengirim data!',
+                    'code'=>'user',
+                    'success'=>false,
+                );
+            }
+        }else{
+            return array(
+                'message'=>'Gagal mengirim data!',
+                'code'=>'token',
+                'success'=>false,
+            );
+        }
+    }
 }

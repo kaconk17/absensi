@@ -25,6 +25,7 @@ class User extends Authenticatable
         'alamat',
         'domisili',
         'kelamin',
+        'tgl_lahir',
         'no_telepon',
         'jabatan',
         'dept',
